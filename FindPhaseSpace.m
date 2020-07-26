@@ -10,13 +10,11 @@ if length(seri)>=Length_THRS
         tou=mi(seri,10,100);
         tou = squeeze(tou(1,1,:));
         tou=find(diff(tou) > 0, 1);
-        check=1;
         if tou>5 && length(seri)<100
             tou=tou_min;
-            check=2;
         end
     else
-        tou=Select_Delay_time(seri);check=6;
+        tou=Select_Delay_time(seri);
     end
     if tou>tou_max
         tou=tou_max;
@@ -29,7 +27,7 @@ if length(seri)>=Length_THRS
         out=fnn(seri,Mmax,tou);
         %Determine m
         if isnan(out)                     %If fnn had error we set m=-1
-            m=-1
+            m=-1;
         else
             error=0.001;
             m=find(out<=error,1);
@@ -43,8 +41,6 @@ if length(seri)>=Length_THRS
                 m=-1;
             end
         end
-    else
-        m=embedding_dimension(seri,tou);
     end
 else
     m=-1;
