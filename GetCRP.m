@@ -59,5 +59,46 @@ while ~feof(fp)
     end
         
 end
+% Saving the last sequence
+if ~isempty(Sequence)
+        fprintf('\nRow:%d',Row);
+        SequenceLength=length(Sequence);
+        A = {LocusName,Source,StrainName,SequenceLength,Sequence};
+        xlRange = ['A',num2str(Row)];
+        sheet=1;
+        xlswrite(filename,A,sheet,xlRange);
+        %_________________________________
+        if length(Sequence)>10
+        [tsx,tsy,pic]=CGR_Genome(Sequence);
+        % The CGR picture is saved in the defiend path with JPEG format
+        saveas(pic,[path,LocusName],'jpg');
+        ts=[tsx;tsy]';
+        dlmwrite([path,LocusName,'.txt'],ts);
+        % It is Possible to define a treshold for Length of the time series
+        %by changing ThrL
+        ThrL=length(tsx);
+        if length(tsx)>ThrL
+            tsx=tsx(1:ThrL);
+            tsy=tsy(1:ThrL);
+        end
+        [m,tou,~]=FindPhaseSpace(tsx);
+        tempx=CRP_Features(tsx,m,tou,EPS);
+        [m,tou,~]=FindPhaseSpace(tsy);
+        tempy=CRP_Features(tsy,m,tou,EPS);
+        RQAFeatures=[tempx,tempy];
+        xlRange = ['A',num2str(Row)];
+        xlswrite(filenameRQA,RQAFeatures,sheet,xlRange);
+        end
+        %_________________________________
+%         words=strsplit(tline,{'|',':'});
+%         LocusName=char(words(2));
+%         Source=char(words(4));
+%         StrainName=char(words(6));
+%         Sequence='';
+%         Row=Row+1;
+%     else
+%         Sequence=[Sequence,tline];
+end
+% end
 fclose(fp);
 end
