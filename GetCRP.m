@@ -59,5 +59,5 @@ while ~feof(fp)
     end
         
 end
-fclose(fid);
+fclose(fp);
 end
