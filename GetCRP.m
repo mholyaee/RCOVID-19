@@ -90,14 +90,6 @@ if ~isempty(Sequence)
         xlswrite(filenameRQA,RQAFeatures,sheet,xlRange);
         end
         %_________________________________
-%         words=strsplit(tline,{'|',':'});
-%         LocusName=char(words(2));
-%         Source=char(words(4));
-%         StrainName=char(words(6));
-%         Sequence='';
-%         Row=Row+1;
-%     else
-%         Sequence=[Sequence,tline];
 end
 % end
 fclose(fp);
