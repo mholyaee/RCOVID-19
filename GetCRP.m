@@ -3,7 +3,7 @@ function GetCRP()
 [FileNamex,PathNamex] = uigetfile('*.*','Select the file(*.fasta)');
 fn=strcat(PathNamex,FileNamex);
 fp = fopen(fn);
-path=strcat(PathNamex,FileNamex(1:length(FileNamex)-6),'CGR','\');
+path=strcat(PathNamex,'CGR','\');
 mkdir(path);                                    % Saving Path
 filename=strcat(path,'GenomesInfo.xlsx');       % The Output files
 filenameRQA=strcat(path,'Genomes_RQA.xlsx');
